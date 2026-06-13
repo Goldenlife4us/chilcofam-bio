@@ -453,6 +453,31 @@
         overflow-wrap: anywhere;
       }
 
+      .source-tip {
+        display: none;
+        gap: 6px;
+        border: 1px solid rgba(139, 92, 246, 0.18);
+        border-radius: 14px;
+        background: linear-gradient(135deg, #fff, #fbf8ff);
+        padding: 12px;
+      }
+
+      .source-tip.is-visible {
+        display: grid;
+      }
+
+      .source-tip strong {
+        color: var(--accent-dark);
+        font-size: 13px;
+        line-height: 1.25;
+      }
+
+      .source-tip span {
+        color: #574f63;
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
       .trust-list {
         display: grid;
         gap: 10px;
@@ -752,6 +777,11 @@
                 <span id="sourceText"></span>
               </div>
 
+              <div class="source-tip" id="sourceTip">
+                <strong id="sourceTipTitle"></strong>
+                <span id="sourceTipText"></span>
+              </div>
+
               <div class="quote-brief" aria-label="Datos para cotizar">
                 <strong>Para cotizar rápido necesitamos:</strong>
                 <ul>
@@ -972,25 +1002,85 @@
         params.get("source_content_id") || params.get("content_id") || params.get("utm_content") || "";
       const sourceUrl = params.get("source_url") || params.get("post_url") || "";
       const whatsappPhone = (params.get("wa_phone") || "").replace(/[^\d]/g, "");
+      const sourceGuides = {
+        "REEL-002": {
+          category: "Otro",
+          title: "Vienes por costo de envío",
+          text:
+            "Incluye país, producto y cantidad. Si ya tienes peso o medidas aproximadas, agrégalas para estimar mejor.",
+          messageHint: "Vengo por costo de envío. Tengo producto, cantidad y país para estimar antes de comprar.",
+        },
+        "REEL-003": {
+          category: "K-Beauty",
+          title: "Vienes por búsqueda de productos",
+          text:
+            "Sirve una captura, link o nombre del producto. Revisamos disponibilidad en Corea antes de cotizar.",
+          messageHint: "Vengo por búsqueda de producto. Quiero revisar disponibilidad en Corea antes de comprar.",
+        },
+        "REEL-004": {
+          category: "Otro",
+          title: "Vienes por proceso y confianza",
+          text:
+            "Puedes pedir revisión con fotos al recibir y empaque según producto antes del envío internacional.",
+          messageHint: "Vengo por el proceso de revisión. Quiero cotizar con fotos al recibir y empaque adecuado.",
+        },
+        "IG-PIN-001": {
+          category: "Otro",
+          title: "Cotización paso a paso",
+          text:
+            "Completa producto, cantidad y país. Si compras en varias tiendas, activa consolidación.",
+          messageHint: "Vengo del post de cómo comprar. Quiero cotizar paso a paso.",
+        },
+        "IG-PIN-002": {
+          category: "Otro",
+          title: "Vienes por tarifas",
+          text:
+            "El costo total separa producto, servicio chilcofam y envío internacional según peso, volumen y país.",
+          messageHint: "Vengo del post de tarifas. Quiero calcular producto, servicio y envío internacional aparte.",
+        },
+        "IG-PIN-003": {
+          category: "Otro",
+          title: "Vienes por confianza y proceso",
+          text:
+            "Podemos revisar cantidad, opción y estado visual antes de preparar el paquete.",
+          messageHint: "Vengo del post de confianza. Quiero cotizar con revisión del pedido antes de enviar.",
+        },
+      };
 
       const form = document.querySelector("#quoteForm");
       const status = document.querySelector("#status");
       const sourceNote = document.querySelector("#sourceNote");
       const sourceText = document.querySelector("#sourceText");
+      const sourceTip = document.querySelector("#sourceTip");
+      const sourceTipTitle = document.querySelector("#sourceTipTitle");
+      const sourceTipText = document.querySelector("#sourceTipText");
       const preparedMessagePanel = document.querySelector("#preparedMessagePanel");
       const preparedMessage = document.querySelector("#preparedMessage");
       const copyPreparedMessage = document.querySelector("#copyPreparedMessage");
       const categoryButtons = Array.from(document.querySelectorAll(".category"));
+
+      function setCategory(category) {
+        const nextCategory = category || "K-Beauty";
+        state.category = nextCategory;
+        categoryButtons.forEach((item) => item.classList.toggle("is-active", item.dataset.category === nextCategory));
+      }
 
       if (sourceContentId) {
         sourceText.textContent = sourceUrl ? `${sourceContentId} · ${sourceUrl}` : sourceContentId;
         sourceNote.classList.add("is-visible");
       }
 
+      const sourceGuide = sourceGuides[sourceContentId];
+      if (sourceGuide) {
+        sourceTipTitle.textContent = sourceGuide.title;
+        sourceTipText.textContent = sourceGuide.text;
+        sourceTip.classList.add("is-visible");
+        setCategory(sourceGuide.category);
+      }
+
       categoryButtons.forEach((button) => {
         button.addEventListener("click", () => {
-          state.category = button.dataset.category;
-          categoryButtons.forEach((item) => item.classList.toggle("is-active", item === button));
+          setCategory(button.dataset.category);
         });
       });
 
@@ -1043,6 +1133,10 @@
           `País de envío: ${country}`,
           `¿Necesito consolidación?: ${consolidation}`,
         ];
+
+        if (sourceGuide?.messageHint) {
+          messageLines.push(`Dato clave: ${sourceGuide.messageHint}`);
+        }
 
         if (sourceContentId || sourceUrl) {
           messageLines.push("");
