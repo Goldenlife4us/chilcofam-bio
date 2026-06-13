@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# This public build only contains the customer quote page.
+# Internal operations dashboards stay outside dist/bio.
