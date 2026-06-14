@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="es">
+<html lang="ko" translate="no">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>REEL-005 Story · chilcofam</title>
+  <title>REEL-005 스토리 · chilcofam</title>
   <style>
     :root {
       color-scheme: light;
@@ -112,24 +112,24 @@
 </head>
 <body>
   <main>
-    <h1>REEL-005 Story</h1>
-    <p>Usa esta pagina en el telefono para guardar la imagen y copiar el link del sticker. Publica solo una story.</p>
+    <h1>REEL-005 스토리</h1>
+    <p>휴대폰에서 이미지를 저장하고 링크 스티커 URL을 복사하세요. 이 스토리 1개만 공개합니다.</p>
     <div class="actions">
-      <a class="button" href="story-assets/reel-005-story-cotizacion.png" download>Descargar imagen</a>
-      <button type="button" id="copyLink">Copiar link sticker</button>
-      <a class="button secondary" href="https://goldenlife4us.github.io/chilcofam-bio?source_content_id=REEL-005&story_id=STORY-POSTBIO-REEL-005&source_url=https%3A%2F%2Fwww.instagram.com%2Fchilcofam%2Freel%2FDZh0k9UhI33%2F">Probar link</a>
+      <a class="button" href="story-assets/reel-005-story-cotizacion.png" download>이미지 저장</a>
+      <button type="button" id="copyLink">스티커 링크 복사</button>
+      <a class="button secondary" href="https://goldenlife4us.github.io/chilcofam-bio?source_content_id=REEL-005&story_id=STORY-POSTBIO-REEL-005&source_url=https%3A%2F%2Fwww.instagram.com%2Fchilcofam%2Freel%2FDZh0k9UhI33%2F">링크 테스트</a>
     </div>
     <div class="grid">
-      <img class="preview" src="story-assets/reel-005-story-cotizacion.png" alt="Story REEL-005 chilcofam cotizacion">
+      <img class="preview" src="story-assets/reel-005-story-cotizacion.png" alt="REEL-005 스토리 이미지">
       <section class="panel">
-        <label class="label" for="storyLink">Link sticker</label>
+        <label class="label" for="storyLink">링크 스티커 URL</label>
         <textarea id="storyLink" readonly>https://goldenlife4us.github.io/chilcofam-bio?source_content_id=REEL-005&story_id=STORY-POSTBIO-REEL-005&source_url=https%3A%2F%2Fwww.instagram.com%2Fchilcofam%2Freel%2FDZh0k9UhI33%2F</textarea>
         <div class="status" id="copyStatus"></div>
         <ol>
-          <li>Abre Instagram en el movil con la cuenta chilcofam.</li>
-          <li>Crea una story y selecciona esta imagen.</li>
-          <li>Pega el link en el sticker de enlace.</li>
-          <li>Publica solo esta story y mide clicks/respuestas despues.</li>
+          <li>모바일 Instagram에서 chilcofam 계정을 엽니다.</li>
+          <li>스토리를 만들고 이 이미지를 선택합니다.</li>
+          <li>링크 스티커에 복사한 URL을 붙입니다.</li>
+          <li>이 스토리 1개만 공개하고, 이후 클릭/답장을 측정합니다.</li>
         </ol>
       </section>
     </div>
@@ -141,11 +141,11 @@
     button.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(textarea.value);
-        status.textContent = "Link copiado.";
+        status.textContent = "링크를 복사했습니다.";
       } catch {
         textarea.focus();
         textarea.select();
-        status.textContent = "Selecciona y copia el link.";
+        status.textContent = "URL을 선택해서 복사하세요.";
       }
     });
   </script>
