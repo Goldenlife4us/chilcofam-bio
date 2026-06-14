@@ -54,6 +54,26 @@
       color: var(--ink);
       border: 1px solid var(--line);
     }
+    .short-url {
+      margin: 0 0 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+    }
+    .short-url strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .short-url a {
+      color: var(--accent);
+      font-size: clamp(18px, 5vw, 26px);
+      font-weight: 800;
+      line-break: anywhere;
+    }
     .grid {
       display: grid;
       grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
@@ -115,9 +135,14 @@
     <h1>REEL-005 스토리</h1>
     <p>휴대폰에서 이미지를 저장하고 링크 스티커 URL을 복사하세요. 이 스토리 1개만 공개합니다.</p>
     <p><strong>링크 스티커 문구:</strong> Cotizar ahora</p>
+    <section class="short-url">
+      <strong>폰에서 열 짧은 주소</strong>
+      <a href="https://goldenlife4us.github.io/chilcofam-bio/s.html" id="shortUrl">https://goldenlife4us.github.io/chilcofam-bio/s.html</a>
+    </section>
     <div class="actions">
       <a class="button" href="story-assets/reel-005-story-cotizacion.png" download>이미지 저장</a>
       <button type="button" id="copyLink">스티커 링크 복사</button>
+      <button type="button" class="secondary" id="copyShort">짧은 주소 복사</button>
       <a class="button secondary" href="https://goldenlife4us.github.io/chilcofam-bio?source_content_id=REEL-005&story_id=STORY-POSTBIO-REEL-005&source_url=https%3A%2F%2Fwww.instagram.com%2Fchilcofam%2Freel%2FDZh0k9UhI33%2F">링크 테스트</a>
     </div>
     <div class="grid">
@@ -138,7 +163,9 @@
   </main>
   <script>
     const button = document.getElementById("copyLink");
+    const shortButton = document.getElementById("copyShort");
     const textarea = document.getElementById("storyLink");
+    const shortUrl = document.getElementById("shortUrl");
     const status = document.getElementById("copyStatus");
     button.addEventListener("click", async () => {
       try {
@@ -148,6 +175,14 @@
         textarea.focus();
         textarea.select();
         status.textContent = "URL을 선택해서 복사하세요.";
+      }
+    });
+    shortButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(shortUrl.textContent);
+        status.textContent = "짧은 주소를 복사했습니다.";
+      } catch {
+        status.textContent = "짧은 주소를 길게 눌러 복사하세요.";
       }
     });
   </script>
