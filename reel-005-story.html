@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>REEL-005 Story · chilcofam</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #171321;
+      --muted: #5f5869;
+      --line: #e5dde9;
+      --accent: #6f42df;
+      --surface: #fbf9ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--surface);
+      color: var(--ink);
+      line-height: 1.45;
+    }
+    main {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 44px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 7vw, 48px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+    p { margin: 0 0 16px; color: var(--muted); }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 24px;
+    }
+    a.button, button {
+      border: 0;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 13px 16px;
+      text-decoration: none;
+    }
+    button.secondary, a.secondary {
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .preview {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 12px 34px rgba(36, 28, 50, 0.12);
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+    }
+    .label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    textarea {
+      width: 100%;
+      min-height: 132px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      font: 14px/1.35 Arial, Helvetica, sans-serif;
+      color: var(--ink);
+    }
+    ol {
+      margin: 16px 0 0;
+      padding-left: 22px;
+    }
+    li { margin-bottom: 8px; }
+    .status {
+      margin-top: 10px;
+      min-height: 22px;
+      color: #1f7a56;
+      font-weight: 700;
+    }
+    @media (max-width: 760px) {
+      main { width: min(100% - 24px, 480px); padding-top: 22px; }
+      .grid { grid-template-columns: 1fr; }
+      .actions { display: grid; }
+      a.button, button { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>REEL-005 Story</h1>
+    <p>Usa esta pagina en el telefono para guardar la imagen y copiar el link del sticker. Publica solo una story.</p>
+    <div class="actions">
+      <a class="button" href="/story-assets/reel-005-story-cotizacion.png" download>Descargar imagen</a>
+      <button type="button" id="copyLink">Copiar link sticker</button>
+      <a class="button secondary" href="https://goldenlife4us.github.io/chilcofam-bio?source_content_id=REEL-005&story_id=STORY-POSTBIO-REEL-005&source_url=https%3A%2F%2Fwww.instagram.com%2Fchilcofam%2Freel%2FDZh0k9UhI33%2F">Probar link</a>
+    </div>
+    <div class="grid">
+      <img class="preview" src="/story-assets/reel-005-story-cotizacion.png" alt="Story REEL-005 chilcofam cotizacion">
+      <section class="panel">
+        <label class="label" for="storyLink">Link sticker</label>
+        <textarea id="storyLink" readonly>https://goldenlife4us.github.io/chilcofam-bio?source_content_id=REEL-005&story_id=STORY-POSTBIO-REEL-005&source_url=https%3A%2F%2Fwww.instagram.com%2Fchilcofam%2Freel%2FDZh0k9UhI33%2F</textarea>
+        <div class="status" id="copyStatus"></div>
+        <ol>
+          <li>Abre Instagram en el movil con la cuenta chilcofam.</li>
+          <li>Crea una story y selecciona esta imagen.</li>
+          <li>Pega el link en el sticker de enlace.</li>
+          <li>Publica solo esta story y mide clicks/respuestas despues.</li>
+        </ol>
+      </section>
+    </div>
+  </main>
+  <script>
+    const button = document.getElementById("copyLink");
+    const textarea = document.getElementById("storyLink");
+    const status = document.getElementById("copyStatus");
+    button.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(textarea.value);
+        status.textContent = "Link copiado.";
+      } catch {
+        textarea.focus();
+        textarea.select();
+        status.textContent = "Selecciona y copia el link.";
+      }
+    });
+  </script>
+</body>
+</html>

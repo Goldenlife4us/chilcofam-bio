@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-# This public build only contains the customer quote page.
+# This public build contains the customer quote page and one REEL-005 story handoff asset.
 # Internal operations dashboards stay outside dist/bio.
